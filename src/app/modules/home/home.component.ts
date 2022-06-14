@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductsService } from 'src/app/services/products.service';
+
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/reducers/index';
+import { AddProductAction } from 'src/app/store/actions/product.action';
+
 import { ProductModel } from 'src/app/models/product.model';
+import { ProductsService } from 'src/app/services/products.service';
 import { formatPrice } from 'src/app/util/util';
 @Component({
   selector: 'app-home',
@@ -13,6 +18,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private productsService: ProductsService,
+    private store: Store<AppState>,
   ) { }
 
   ngOnInit(): void {
@@ -31,8 +37,12 @@ export class HomeComponent implements OnInit {
       ...product,
       priceFormatted: formatPrice(product.price),
     }));
-    
+
     this.products = data;
+  }
+
+  addProductToCart(product: ProductModel) {
+    this.store.dispatch(new AddProductAction(product));
   }
 
 }
