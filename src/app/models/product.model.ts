@@ -4,4 +4,6 @@ export interface ProductModel {
   price: number;
   image: string;
   priceFormatted: string;
+  amount: number;
+  subtotal: string;
 }

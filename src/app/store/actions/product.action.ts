@@ -9,13 +9,13 @@ export enum ProductActionsTypes {
 export class AddProductAction implements Action {
   readonly type = ProductActionsTypes.ADD_PRODUCT;
 
-  constructor(public payload: ProductModel) { }
+  constructor(public payload: any) { }
 }
 
 export class RemoveProductAction implements Action {
   readonly type = ProductActionsTypes.REMOVE_PRODUCT;
 
-  constructor(public payload: number) { }
+  constructor(public payload: any) { }
 }
 
 export type ProductAction = AddProductAction | RemoveProductAction;
