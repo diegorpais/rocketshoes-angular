@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/store/reducers/index';
 import { Observable } from 'rxjs';
+import { RemoveProductAction, UpdateAmountProductAction } from 'src/app/store/actions/product.action';
 
 import { ProductModel } from 'src/app/models/product.model';
 import { formatPrice } from 'src/app/util/util';
@@ -43,6 +44,24 @@ export class CartComponent implements OnInit {
     this.total = formatPrice(this.cartProductList.reduce((total: any, product: ProductModel) => {
       return total + product.price * product.amount;
     }, 0));
+  }
+
+  removeFromCart(productId: number) {
+    this.store.dispatch(new RemoveProductAction(productId));
+  }
+
+  increment(product: ProductModel) {
+    const p = { ...product };
+    p.amount += 1;
+    this.store.dispatch(new UpdateAmountProductAction(p));
+  }
+
+  decrement(product: ProductModel) {
+    const p = { ...product };
+    if (p.amount > 1) {
+      p.amount -= 1;
+      this.store.dispatch(new UpdateAmountProductAction(p));
+    }
   }
 
 

@@ -26,7 +26,7 @@
         </td>
         <td>
           <div>
-            <button type="button">
+            <button type="button" (click)="decrement(product)">
               <i
                 class="fa fa-minus-circle"
                 aria-hidden="true"
@@ -34,7 +34,7 @@
               ></i>
             </button>
             <input type="number" readOnly [value]="product.amount" />
-            <button type="button">
+            <button type="button" (click)="increment(product)">
               <i
                 class="fa fa-plus-circle"
                 aria-hidden="true"
@@ -47,7 +47,7 @@
           <strong>{{product.subtotal}}</strong>
         </td>
         <td>
-          <button type="button">
+          <button type="button" (click)="removeFromCart(product.id)">
             <i
               class="fa fa-trash"
               aria-hidden="true"

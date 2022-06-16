@@ -8,12 +8,12 @@ export function ProductReducer(
   action: ProductAction
 ) {
 
+  const productIndex = state.findIndex(p => p.id === action.payload.id);
+  // prevent error: cannot add property 0 object is not extensible
+  const products = JSON.parse(JSON.stringify(state));
+
   switch (action.type) {
     case ProductActionsTypes.ADD_PRODUCT:
-      const productIndex = state.findIndex(p => p.id === action.payload.id);
-      // prevent error: cannot add property 0 object is not extensible
-      const products = JSON.parse(JSON.stringify(state));
-
       if (productIndex >= 0) {
         products[productIndex].amount += 1;
         return products;
@@ -25,6 +25,17 @@ export function ProductReducer(
 
     case ProductActionsTypes.REMOVE_PRODUCT:
       return state.filter(item => item.id !== action.payload);
+
+    case ProductActionsTypes.UPDATE_AMOUNT_PRODUCT:
+      if (action.payload.amount <= 0) {
+        return state;
+      }
+
+      if (productIndex >= 0) {
+        products[productIndex].amount = Number(action.payload.amount);
+      }
+
+      return products;
 
     default:
       return state;

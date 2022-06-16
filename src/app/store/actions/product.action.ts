@@ -1,9 +1,9 @@
 import { Action } from "@ngrx/store";
-import { ProductModel } from 'src/app/models/product.model';
 
 export enum ProductActionsTypes {
   ADD_PRODUCT = '[PRODUCT] Add',
-  REMOVE_PRODUCT = '[PRODUCT] Add',
+  REMOVE_PRODUCT = '[PRODUCT] Remove',
+  UPDATE_AMOUNT_PRODUCT = '[PRODUCT] Update amount',
 }
 
 export class AddProductAction implements Action {
@@ -18,4 +18,10 @@ export class RemoveProductAction implements Action {
   constructor(public payload: any) { }
 }
 
-export type ProductAction = AddProductAction | RemoveProductAction;
+export class UpdateAmountProductAction implements Action {
+  readonly type = ProductActionsTypes.UPDATE_AMOUNT_PRODUCT;
+
+  constructor(public payload: any) { }
+}
+
+export type ProductAction = AddProductAction | RemoveProductAction | UpdateAmountProductAction;
