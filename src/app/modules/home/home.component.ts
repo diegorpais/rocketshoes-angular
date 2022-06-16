@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/store/reducers/index';
 import { AddProductAction } from 'src/app/store/actions/product.action';
+import { Store, select } from '@ngrx/store';
+import { AppState } from 'src/app/store/reducers/index';
+import { Observable } from 'rxjs';
 
 import { ProductModel } from 'src/app/models/product.model';
 import { ProductsService } from 'src/app/services/products.service';
@@ -16,10 +17,20 @@ export class HomeComponent implements OnInit {
 
   products: ProductModel[] = [];
 
+  cartProducts$: Observable<Array<ProductModel>>;
+  cartProducts: ProductModel[] = [];
+
   constructor(
     private productsService: ProductsService,
     private store: Store<AppState>,
-  ) { }
+  ) {
+    this.cartProducts$ = this.store.pipe(select('product'));
+    this.cartProducts$.subscribe(
+      res => {
+        this.cartProducts = res;
+      },
+    );
+  }
 
   ngOnInit(): void {
     this.getProductList();
@@ -43,6 +54,14 @@ export class HomeComponent implements OnInit {
 
   addProductToCart(product: ProductModel) {
     this.store.dispatch(new AddProductAction(product));
+  }
+
+  getTotalItem(producId: number) {
+    const product = this.cartProducts.filter(p => p.id === producId);
+    if (product.length > 0) {
+      return product[0].amount;
+    }
+    return 0;
   }
 
 }

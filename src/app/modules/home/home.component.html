@@ -11,7 +11,7 @@
     <button type="button" (click)="addProductToCart(product)">
       <div>
         <i class="fa fa-shopping-cart" aria-hidden="true" style="zoom: 1.2"></i>
-        &nbsp; 0
+        &nbsp; {{getTotalItem(product.id)}}
       </div>
 
       <span>ADICONAR AO CARRINHO</span>
